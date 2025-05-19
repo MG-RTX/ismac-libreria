@@ -63,7 +63,7 @@ public class ClienteTest {
             () -> assertTrue(str.contains("1753352515")),
             () -> assertTrue(str.contains("Ara")),
             () -> assertTrue(str.contains("Chupin")),
-            () -> assertTrue(str.contains("Tumbaco")),
+            () -> assertTrue(str.contains("Tumbaco" )),
             () -> assertTrue(str.contains("911")),
             () -> assertTrue(str.contains("pepe@gmail.com"))
         );
