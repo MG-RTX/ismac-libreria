@@ -1,5 +1,7 @@
 package com.distribuida.entities;
 
+import com.distribuida.entities.Libro;
+
 public class FacturaDetalle {
 
     private int idFacturaDetalle;

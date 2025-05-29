@@ -1,7 +1,7 @@
 package com.distribuida.principal;
 
+
 import com.distribuida.entities.Cliente;
-import org.distribuida.entities.cliente;
 
 public class ClientePrincipal {
 

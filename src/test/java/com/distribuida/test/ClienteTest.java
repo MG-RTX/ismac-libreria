@@ -1,7 +1,8 @@
 package com.distribuida.test;
 
 
-import org.distribuida.entities.cliente;
+
+import com.distribuida.entities.Cliente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClienteTest {
 
-    private cliente cliente;
+    private Cliente cliente;
 
 
     @BeforeEach
     public void setup(){
 
-        cliente = new cliente(1,"1753352515", "Ara","Chupin",
+        cliente = new Cliente(1,"1753352515", "Ara","Chupin",
                 "Tumbaco" ,"911","pepe@gmail.com");
     }
 

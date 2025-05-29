@@ -1,6 +1,7 @@
 package com.distribuida.entities;
 
 import java.util.Date;
+import com.distribuida.entities.Cliente;
 
 public class Factura {
 
