@@ -23,7 +23,7 @@ public class ClienteTest {
     @Test
     public void testClienteConstructorandGetter(){
         assertAll("Validar datos Cliente, Constructor y Getters",
-                () -> assertEquals(1, cliente.getIdCliente()),
+                () -> assertEquals(1,  cliente.getIdCliente()),
                 () -> assertEquals("1753352515", cliente.getCedula()),
                 () -> assertEquals("Ara", cliente.getNombre()),
                 () -> assertEquals("Chupin", cliente.getApellido()),
