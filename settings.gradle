@@ -1,0 +1,2 @@
+rootProject.name = 'proyectolibreria'
+include 'libreria-spring','libreria'
