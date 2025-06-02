@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@AutoConfigureTestDatabase
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 @Rollback(value = false)
 public class AutorRepositorioTestIntegracion {
@@ -45,8 +45,8 @@ public class AutorRepositorioTestIntegracion {
         Autor autor = new Autor(1,"Lucho","Diaz","Ecuador","Pifo","911","mg@gmail.com");
         autorRepository.save(autor);
         assertNotNull(autor.getIdAutor(),"El autor guardado debe tener ID");
-        assertEquals("999", autor.getTelefono());
-        assertEquals("Pepe", autor.getNombre());
+        assertEquals("911", autor.getTelefono());
+        assertEquals("Lucho", autor.getNombre());
     }
 
     @Test
@@ -63,8 +63,8 @@ public class AutorRepositorioTestIntegracion {
 
         Autor autoractualizado = autorRepository.save(autor.orElse(null));
 
-        assertEquals("Carlos",autoractualizado.getNombre());
-        assertEquals("Villa", autoractualizado.getApellido());
+        assertEquals("Jona",autoractualizado.getNombre());
+        assertEquals("Flores", autoractualizado.getApellido());
 
     }
 

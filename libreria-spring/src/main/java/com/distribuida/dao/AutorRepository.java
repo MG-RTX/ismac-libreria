@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AutorRepository extends JpaRepository<Autor, Integer> {
 
-    Autor findByAutor(String autor);
+    // Ejemplo válido si la clase Autor tiene la propiedad 'nombre'
+    Autor findByNombre(String nombre);
 }
