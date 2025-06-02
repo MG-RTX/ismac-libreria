@@ -1,5 +1,12 @@
 package com.distribuida.model;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name="autor")
+
 public class Autor {
 
     private int idAutor;
