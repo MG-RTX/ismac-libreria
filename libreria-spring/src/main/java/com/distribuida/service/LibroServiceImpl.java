@@ -48,12 +48,31 @@ public class LibroServiceImpl implements LibroService{
             return null;
         }
 
-        libroExistente.setAutor(libro.getAutor());
-        libroExistente.setCategoria(libro.getCategoria());
-        libroExistente.setDescripcion(libro.getDescripcion());
+        libroExistente.setTitulo(libro.getTitulo());
+        libroExistente.setEditorial(libro.getEditorial());
+        libroExistente.setNumPaginas(libro.getNumPaginas());
         libroExistente.setEdicion(libro.getEdicion());
-        libroExistente.setCategoria();
+        libroExistente.setIdioma(libro.getIdioma());
+        libroExistente.setFechaPublicacion(libro.getFechaPublicacion());
+        libroExistente.setDescripcion(libro.getDescripcion());
+        libroExistente.setTipoPasta(libro.getTipoPasta());
+        libroExistente.setIsbn(libro.getIsbn());
+        libroExistente.setNumEjemplares(libro.getNumEjemplares());
+        libroExistente.setPortada(libro.getPortada());
+        libroExistente.setPresentacion(libro.getPresentacion());
+        libroExistente.setPrecio(libro.getPrecio());
+        libroExistente.setAutor(autorExistente.orElse(null));
+        libroExistente.setCategoria(categoriaExistente.orElse(null));
 
+        return libroRepository.save(libroExistente);
+
+    }
+
+    @Override
+    public void delete(int id){
+        if (libroRepository.existsById(id)){
+            libroRepository.deleteById(id);
+        }
     }
 
 }

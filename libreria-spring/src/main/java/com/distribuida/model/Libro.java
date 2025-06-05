@@ -37,9 +37,11 @@ public class Libro {
     private String presentacion;
     @Column(name = "precio")
     private Double precio;
+
     @ManyToOne
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
+
     @ManyToOne
     @JoinColumn(name = "id_autor")
     private Autor autor;

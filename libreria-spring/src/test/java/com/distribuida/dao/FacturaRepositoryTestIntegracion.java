@@ -26,7 +26,7 @@ public class FacturaRepositoryTestIntegracion {
     private ClienteRepository clienteRepository;
 
     @Test
-    public void FindAll(){
+    public void findAll(){
         List<Factura>facturas = facturaRepository.findAll();
         for (Factura item: facturas){
             System.out.println(item.toString());
@@ -56,7 +56,7 @@ public class FacturaRepositoryTestIntegracion {
 
     @Test
     public void update(){
-        Optional<Factura> facturaExistente = facturaRepository.findById(86);
+        Optional<Factura> facturaExistente = facturaRepository.findById(81);
         Optional<Cliente> cliente = clienteRepository.findById(2);
 
         facturaExistente.orElse(null).setNumFactura("FAC-0009");
