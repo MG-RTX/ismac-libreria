@@ -27,14 +27,27 @@ public class Factura {
         private Cliente cliente;
 
         public Factura() {
+        }
+
+        public Factura(int idFactura, String numFactura, Date fecha, Double totalNeto, Double iva, Double total, Cliente cliente) {
             this.idFactura = idFactura;
-            this.fecha = fecha;
             this.numFactura = numFactura;
+            this.fecha = fecha;
             this.totalNeto = totalNeto;
             this.iva = iva;
             this.total = total;
             this.cliente = cliente;
         }
+
+    //        public Factura() {
+//            this.idFactura = idFactura;
+//            this.fecha = fecha;
+//            this.numFactura = numFactura;
+//            this.totalNeto = totalNeto;
+//            this.iva = iva;
+//            this.total = total;
+//            this.cliente = cliente;
+//        }
 
         public int getIdFactura() {
             return idFactura;
