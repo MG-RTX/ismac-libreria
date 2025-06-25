@@ -1,7 +1,9 @@
 package com.distribuida.controller;
 
+import com.distribuida.model.Autor;
 import com.distribuida.model.Categoria;
-import com.distribuida.service.CategoriaService;
+import com.distribuida.model.Libro;
+import com.distribuida.service.LibroService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Date;
 import java.util.List;
+
 
 //import static java.lang.reflect.Array.get;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,47 +25,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SuppressWarnings("removal")
-@WebMvcTest(CategoriaController.class)
-public class CategoriaControllerTestIntegracion {
+@WebMvcTest(LibroController.class)
+public class LibroControllerTestIntegracion {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private CategoriaService categoriaService;
+    private LibroService libroService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
-    public void testFindAll() throws Exception {
-        Categoria categoria = new Categoria(1,"Amor","Romance");
+    public void testFinAll() throws Exception {
+        Libro libro = new Libro(1,"Fenomeno","PEPE",12,"Mala","Español",new Date(),"Corta","Roja","ISBN",5,"Mala","Buena",12.23,new Categoria(), new Autor());
 
-        Mockito.when(categoriaService.findAll()).thenReturn(List.of(categoria));
+        Mockito.when(libroService.findAll()).thenReturn(List.of(libro));
 
-        mockMvc.perform(get("/categoria"))
+        mockMvc.perform(get("/api/libro"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].categoria").value("Amor"));
+                .andExpect(jsonPath("$[0].titulo").value("Fenomeno"));
     }
 
     @Test
     public void testSave() throws Exception {
-        Categoria categoria = new Categoria(1,"Amor","Romance");
+        Libro libro = new Libro(1,"Fenomeno","PEPE",12,"Mala","Español",new Date(),"Corta","Roja","ISBN",5,"Mala","Buena",12.23,new Categoria(), new Autor());
 
-        Mockito.when(categoriaService.save(any(Categoria.class))).thenReturn(categoria);
+        Mockito.when(libroService.save(any(Libro.class))).thenReturn(libro);
 
-        mockMvc.perform(post("/categoria")
+        mockMvc.perform(post("/api/libro")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoria))
+                .content(objectMapper.writeValueAsString(libro))
         )       .andExpect(status().isOk())
-                .andExpect(jsonPath("$.categoria").value("Amor"));
+                .andExpect(jsonPath("$.titulo").value("Fenomeno"));
+
     }
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete("/categoria/1")).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/libro/2")).andExpect(status().isNoContent());
     }
-
-
-
 }

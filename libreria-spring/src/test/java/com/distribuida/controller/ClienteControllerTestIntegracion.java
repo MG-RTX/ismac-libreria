@@ -64,6 +64,4 @@ public class ClienteControllerTestIntegracion {
         mockMvc.perform(delete("/clientes/1")).andExpect(status().isNoContent());
     }
 
-
-
 }
