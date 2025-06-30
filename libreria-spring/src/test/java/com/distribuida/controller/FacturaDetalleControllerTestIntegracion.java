@@ -1,12 +1,12 @@
 package com.distribuida.controller;
 
-import com.distribuida.model.Cliente;
 import com.distribuida.model.Factura;
-import com.distribuida.service.FacturaService;
+import com.distribuida.model.FacturaDetalle;
+import com.distribuida.model.Libro;
+import com.distribuida.service.FacturaDetalleService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,8 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.security.PublicKey;
-import java.util.Date;
 import java.util.List;
 
 //import static java.lang.reflect.Array.get;
@@ -25,44 +23,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SuppressWarnings("removal")
-@WebMvcTest(FacturaController.class)
-public class FacturaControllerTestIntegracion {
+@WebMvcTest(FacturaDetalleController.class)
+public class FacturaDetalleControllerTestIntegracion {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private FacturaService facturaService;
+    private FacturaDetalleService facturaDetalleService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
     public void testFindAll() throws Exception {
-        Factura factura = new Factura(1,"FAC-00090",new Date(),12.90,12.20,25.10,new Cliente());
+        FacturaDetalle facturaDetalle = new FacturaDetalle(1,12,12.21,new Libro(),new Factura());
 
-        Mockito.when(facturaService.findAll()).thenReturn(List.of(factura));
+        Mockito.when(facturaDetalleService.findAll()).thenReturn(List.of(facturaDetalle));
 
-        mockMvc.perform(get("/api/facturas"))
+        mockMvc.perform(get("/api/factura_detalle"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.numFactura").value("FAC-00090"));
+                .andExpect(jsonPath("$.cantidad").value(12));
     }
 
     @Test
     public void testSave() throws Exception {
-        Factura factura = new Factura(1,"FAC-00090",new Date(),12.90,12.20,25.10,new Cliente());
+        FacturaDetalle facturaDetalle = new FacturaDetalle(1,12,12.21,new Libro(),new Factura());
+        Mockito.when(facturaDetalleService.save(any(FacturaDetalle.class))).thenReturn(facturaDetalle);
 
-        Mockito.when(facturaService.save(any(Factura.class))).thenReturn(factura);
-
-        mockMvc.perform(post("/api/facturas")
+        mockMvc.perform(post("/api/factura_detalle")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(factura))
+                .content(objectMapper.writeValueAsString(facturaDetalle))
         )       .andExpect(status().isOk())
-                .andExpect(jsonPath("$.numFactura").value("FAC-00090"));
+                .andExpect(jsonPath("$.cantidad").value(12));
     }
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete("/api/facturas/2")).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/factura_detalle/2")).andExpect(status().isNoContent());
     }
+
 }
