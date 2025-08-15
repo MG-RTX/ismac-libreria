@@ -157,6 +157,7 @@ public class Libro {
     }
 
     public String getPortada() {
+
         return portada;
     }
 
@@ -165,6 +166,7 @@ public class Libro {
     }
 
     public String getPresentacion() {
+
         return presentacion;
     }
 

@@ -36,9 +36,14 @@ public class LibroController {
         return ResponseEntity.ok(libroNuevo);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Libro> update(@PathVariable int id, @PathVariable int idCategoria, @PathVariable int idAutor, @RequestBody Libro libro){
-        Libro libroActualizado = libroService.update(id,idCategoria,idAutor,libro);
+    @PutMapping("/libro/{id}")
+    public ResponseEntity<Libro> update(
+            @PathVariable int id,
+            @PathVariable int idAutor,
+            @PathVariable int idCategoria,
+            @RequestBody Libro libro
+    ){
+        Libro libroActualizado = libroService.update(id,idAutor, idCategoria, libro);
         if (libroActualizado == null){
             return ResponseEntity.notFound().build();
         }

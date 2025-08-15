@@ -8,6 +8,6 @@ public interface LibroService {
     public List<Libro> findAll();
     public Libro findOne(int id);
     public Libro save(Libro libro);
-    public Libro update(int id, int idCategoria, int idAutor, Libro libro);
+    public Libro update(int id,int idCategoria, int idAutor,Libro libro);
     public void delete(int id);
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 @Service
 public class LibroServiceImpl implements LibroService{
@@ -34,7 +35,24 @@ public class LibroServiceImpl implements LibroService{
         return libro.orElse(null);
     }
     @Override
-    public Libro save(Libro libro){
+    public Libro save(Libro libro) {
+        // Validate Libro
+        Objects.requireNonNull(libro, "Libro no puede ser nulo");
+
+        // Fetch and validate Autor
+        Autor autor = Optional.ofNullable(libro.getAutor())
+                .map(a -> autorRepository.findById(a.getIdAutor()))
+                        .orElseThrow(() -> new RuntimeException("Autor no válido o sin ID"))
+                        .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
+        libro.setAutor(autor);
+
+        // Fetch and validate Categoria
+        Categoria categoria = Optional.ofNullable(libro.getCategoria())
+                .map(c -> categoriaRepository.findById(c.getIdCategoria()))
+                .orElseThrow(() -> new RuntimeException("Categoría no válida o sin ID"))
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        libro.setCategoria(categoria);
+
         return libroRepository.save(libro);
     }
 
@@ -48,6 +66,13 @@ public class LibroServiceImpl implements LibroService{
         if (libroExistente == null){
             return null;
         }
+        if (autorExistente.isPresent()) {
+            libroExistente.setAutor(autorExistente.get());
+        }
+        if (categoriaExistente.isPresent()) {
+            libroExistente.setCategoria(categoriaExistente.get());
+        }
+
 
         libroExistente.setTitulo(libro.getTitulo());
         libroExistente.setEditorial(libro.getEditorial());
@@ -62,8 +87,8 @@ public class LibroServiceImpl implements LibroService{
         libroExistente.setPortada(libro.getPortada());
         libroExistente.setPresentacion(libro.getPresentacion());
         libroExistente.setPrecio(libro.getPrecio());
-        libroExistente.setAutor(autorExistente.orElse(null));
-        libroExistente.setCategoria(categoriaExistente.orElse(null));
+        libroExistente.setAutor(libro.getAutor());
+        libroExistente.setCategoria(libro.getCategoria());
 
         return libroRepository.save(libroExistente);
 
