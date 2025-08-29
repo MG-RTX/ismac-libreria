@@ -7,9 +7,12 @@ import com.distribuida.dao.LibroRepository;
 import com.distribuida.model.Carrito;
 import com.distribuida.model.CarritoItem;
 import jakarta.transaction.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CarritoServiceImpl implements CarritoService {
@@ -139,14 +142,30 @@ public class CarritoServiceImpl implements CarritoService {
     @Override
     @Transactional
     public Carrito getOrCreatedByToken(String token) {
-        var c = new Carrito();
-        c.setToken(token);
-        c.setSubtotal(BigDecimal.ZERO);
-        c.setDescuento(BigDecimal.ZERO);
-        c.setImpuestos(BigDecimal.ZERO);
-        c.setTotal(BigDecimal.ZERO);
-        return carritoRepository.save(c);
+        if(token == null || token.isBlank()) {
+            token = UUID.randomUUID().toString();
+        }
+
+
+        Optional<Carrito> existente = carritoRepository.findByToken(token);
+        if (existente.isPresent()) return existente.get();
+
+        try {
+            Carrito c = new Carrito();
+            c.setToken(token);
+            c.setSubtotal(BigDecimal.ZERO);
+            c.setDescuento(BigDecimal.ZERO);
+            c.setImpuestos(BigDecimal.ZERO);
+            c.setTotal(BigDecimal.ZERO);
+            return carritoRepository.save(c);
+        } catch (DataIntegrityViolationException e) {
+            // Si otro request creó el mismo token concurrentemente
+            return carritoRepository.findByToken(token)
+                    .orElseThrow(() -> new RuntimeException("Error inesperado al crear carrito"));
+        }
     }
+
+
 
     @Override
     @Transactional
@@ -230,3 +249,5 @@ public class CarritoServiceImpl implements CarritoService {
                 });
     }
 }
+
+
