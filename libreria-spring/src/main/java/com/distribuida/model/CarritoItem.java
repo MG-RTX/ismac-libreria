@@ -29,7 +29,7 @@ public class CarritoItem {
     @Column(name = "cantidad")
     private Integer cantidad;
 
-    @Column(name = "precion_unitario", precision = 12,scale = 2)
+    @Column(name = "precio_unitario", precision = 12,scale = 2)
     private BigDecimal precioUnitario;
 
     @Column(name = "total", precision = 12,scale = 2)
